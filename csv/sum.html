@@ -1,0 +1,109 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="">
+  <meta property="og:type" content="">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
+
+
+  
+  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+
+
+</head>
+
+<body class="container">
+  <div class="flex flex-col items-center justify-center ml-48 pt-48 outline-none gap-6">
+    <button id="myButton" class="py-4 px-6 rounded-full text-white text-2xl  uppercase bg-red-500 hover:shadow-2xl  focus:outline-none hover:scale-120">Sum</button>
+<p id="demo" class="text-2xl"></p>
+  </div>
+ 
+
+
+
+
+
+ 
+
+</body>
+<script>
+
+ 
+  
+
+
+
+
+
+
+  //download 
+
+  const sum = function (arr,S) {
+     
+
+      let sums=[];
+      let hashTable={};
+
+      // check each elements in array to see if
+      for( let i=0; i< arr.length;i++) {
+
+          //calcualte S- current element in array
+
+          var sumMinus= S-arr[i];
+          //check if this number exists in hash tableTab
+          //if so then we founad a pair of numbers that sum to Sum
+
+          if(hashTable[sumMinus.toString()] !== undefined){
+              sums.push([arr[i],sumMinus]);
+
+          }
+          hashTable[arr[i].toString()] = arr[i];
+      }
+      return sums;
+    
+
+  
+ 
+ 
+
+
+
+
+
+  }
+  
+ 
+
+const getResult= function() {
+    const data=sum([2,5,8,9,12], 7);
+    document.getElementById("demo").innerHTML = `[${data}]`;
+ 
+};
+
+
+
+
+
+
+
+
+(function () {
+
+
+//button click
+const button = document.getElementById("myButton");
+button.addEventListener("click",getResult);
+
+})();
+  
+ 
+    </script>
+
+</html>

@@ -1,0 +1,159 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="">
+  <meta property="og:type" content="">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
+
+
+  
+  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+
+
+</head>
+
+<body class="container">
+  <div class="flex justify-center ml-48 pt-48 outline-none">
+    <button id="myButton" class="py-8 px-8 rounded-full text-white text-2xl  uppercase bg-red-500 hover:shadow-2xl  focus:outline-none hover:scale-120">Download</button>
+
+  </div>
+ 
+
+
+
+
+
+ 
+
+</body>
+<script>
+
+  const objectToCsv = function (data) {
+
+
+    const csvRows =[];
+
+
+    
+    
+    //get the headers
+
+    const headers = Object.keys(data[0]);
+    
+
+    csvRows.push(headers.join(','));
+
+
+    //loop over the rows
+
+    for (const row of data) {
+
+      const values=headers.map (header => {
+
+        const escaped = (""+row[header]).replace(/"/g,'\\"')
+        return `"${escaped}"`;
+
+      });
+      csvRows.push(values.join(","));
+
+    }
+
+
+
+  
+
+
+
+    // form escaped comma separated values
+
+return csvRows.join("\n");
+
+
+
+
+
+  };
+
+
+
+  //download 
+
+  const download = function (data) {
+
+    const blob = new Blob([data], {type:"text/csv"});
+    const url= window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+
+    a.setAttribute('hidden', '');
+    a.setAttribute('href', url);
+    a.setAttribute('download', 'download.csv');
+    document.body.appendChild(a);
+
+    a.click();
+    document.body.removeChild(a);
+ 
+
+
+
+
+
+  }
+
+
+
+
+  const getData = async function() {
+      const dataUrl = "https://dummy.restapiexample.com/api/v1/employees";
+      const res = await fetch(dataUrl);
+      const json = await res.json();
+     
+      const data= json.data.map( row => ({
+        Employee_Id:row.id,
+        Employee_Name: row.employee_name,
+        Employee_Salary:`Rs.${row.employee_salary}`,
+        Employee_Age:row.employee_age,
+
+
+
+      }
+
+      ));
+      console.log(data)
+
+    
+
+       const csvData = objectToCsv(data) ;
+      
+
+       
+     download(csvData);
+  
+
+
+      
+      
+  };
+//main function
+
+
+
+(function () {
+
+
+//button click
+const button = document.getElementById("myButton");
+button.addEventListener("click",getData);
+
+})();
+  
+ 
+    </script>
+
+</html>
